@@ -48,6 +48,7 @@ export interface EducationItem {
   field: string;
   startDate: string;
   endDate: string;
+  current?: boolean;
   details: string;
   visible: boolean;
 }
@@ -85,6 +86,37 @@ export interface SectionVisibility {
   honors: boolean;
 }
 
+export interface SectionLabels {
+  summary?: string;
+  experience?: string;
+  projects?: string;
+  education?: string;
+  certifications?: string;
+  skills?: string;
+  honors?: string;
+}
+
+export type CustomSectionType = 'bullets' | 'text' | 'items';
+
+export interface CustomSectionItem {
+  id: string;
+  title: string;
+  subtitle?: string;
+  date?: string;
+  description?: string;
+}
+
+export interface CustomSection {
+  id: string;
+  title: string;
+  type: CustomSectionType;
+  visible?: boolean;
+  pageBreakBefore?: boolean;
+  bullets?: string[];
+  text?: string;
+  items?: CustomSectionItem[];
+}
+
 export interface CVData {
   personal: PersonalInfo;
   summary: string;
@@ -95,6 +127,10 @@ export interface CVData {
   skills: SkillGroup[];
   honors: HonorItem[];
   sectionVisibility: SectionVisibility;
+  sectionLabels?: SectionLabels;
+  customSections?: CustomSection[];
+  sectionOrder?: string[];
+  pageBreakSections?: Record<string, boolean>;
 }
 
 // ---------------------------------------------------------------------------
@@ -112,6 +148,10 @@ export interface Customization {
   accent: string; // hex color
   font: FontId;
   density: Density;
+  fontSizeScale?: number; // 0.85 - 1.15, default 1
+  marginScale?: number;   // 0.80 - 1.25, default 1
+  paperSize?: 'a4' | 'letter'; // default 'a4'
+  documentLanguage?: 'id' | 'en'; // default 'id'
 }
 
 export interface AppState {

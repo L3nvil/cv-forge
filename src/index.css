@@ -3,23 +3,90 @@
 @tailwind utilities;
 
 :root {
-  --bg: #f8fafc;
+  /* Skala Radius Workspace */
+  --radius-none: 0px;
+  --radius-control: 8px;
+  --radius-card: 12px;
+  --radius-pill: 9999px;
+
+  /* Skala Spacing Workspace */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Motion Workspace Tokens */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 280ms;
+  --ease-standard: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-emphasis: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* Warna Workspace */
+  --bg: #f5f5f7;
   --surface: #ffffff;
-  --surface-2: #f1f5f9;
-  --border: #e2e8f0;
-  --text: #0f172a;
-  --text-muted: #64748b;
-  --ring: #6366f1;
+  --surface-2: #f5f5f7;
+  --surface-pearl: #fafafc;
+  --border: #e0e0e0;
+  --border-subtle: #f0f0f0;
+  --text: #1d1d1f;
+  --text-muted: #7a7a7a;
+  --text-muted-dark: #333333;
+  --primary: #0066cc;
+  --primary-focus: #0071e3;
+  --ring: #0066cc;
+
+  /* Status Tokens Workspace (Apple System Colors) */
+  --status-danger: #d70015;
+  --status-danger-bg: rgba(215, 0, 21, 0.08);
+  --status-warning: #b25000;
+  --status-warning-bg: rgba(178, 80, 0, 0.08);
+  --status-success: #1a7f37;
+  --status-success-bg: rgba(26, 127, 55, 0.08);
 }
 
 .dark {
-  --bg: #0b0f17;
-  --surface: #111827;
-  --surface-2: #1a2233;
-  --border: #243049;
-  --text: #e5e7eb;
-  --text-muted: #94a3b8;
-  --ring: #818cf8;
+  --radius-none: 0px;
+  --radius-control: 8px;
+  --radius-card: 12px;
+  --radius-pill: 9999px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Motion Workspace Tokens */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 280ms;
+  --ease-standard: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-emphasis: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --bg: #1d1d1f;
+  --surface: #272729;
+  --surface-2: #252527;
+  --surface-pearl: #2a2a2c;
+  --border: rgba(255, 255, 255, 0.14);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --text: #ffffff;
+  --text-muted: #cccccc;
+  --text-muted-dark: #999999;
+  --primary: #2997ff;
+  --primary-focus: #0071e3;
+  --ring: #2997ff;
+
+  /* Status Tokens Workspace (Dark Mode) */
+  --status-danger: #ff453a;
+  --status-danger-bg: rgba(255, 69, 58, 0.15);
+  --status-warning: #ff9f0a;
+  --status-warning-bg: rgba(255, 159, 10, 0.15);
+  --status-success: #30d158;
+  --status-success-bg: rgba(48, 209, 88, 0.15);
 }
 
 html,
@@ -32,8 +99,9 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @layer components {
@@ -49,29 +117,78 @@ body {
   .app-muted {
     color: var(--text-muted);
   }
+  .text-danger {
+    color: var(--status-danger);
+  }
+  .bg-danger {
+    background-color: var(--status-danger-bg);
+  }
+  .text-warning {
+    color: var(--status-warning);
+  }
+  .bg-warning {
+    background-color: var(--status-warning-bg);
+  }
+  .text-success {
+    color: var(--status-success);
+  }
+  .bg-success {
+    background-color: var(--status-success-bg);
+  }
+  /* Input satu baris: tinggi 40-44px, radius 8px, border hairline, isi 15-16px */
   .app-input {
-    @apply w-full rounded-lg border px-3 py-2 text-sm outline-none transition;
+    @apply h-11 w-full rounded-control border border-[var(--border)] px-4 py-2 text-base leading-normal outline-none transition-colors duration-base ease-standard;
     background: var(--surface);
-    border-color: var(--border);
     color: var(--text);
+    border-radius: var(--radius-control);
   }
   .app-input:focus {
-    border-color: var(--ring);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 25%, transparent);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary-focus);
   }
   .app-input::placeholder {
     color: var(--text-muted);
-    opacity: 0.7;
+    opacity: 0.8;
   }
+  /* Input textarea: radius 8px (sama dengan input satu baris), border hairline, isi 15-16px */
+  .app-textarea {
+    @apply w-full rounded-control border border-[var(--border)] px-4 py-3 text-base leading-relaxed outline-none transition-colors duration-base ease-standard;
+    background: var(--surface);
+    color: var(--text);
+    border-radius: var(--radius-control);
+  }
+  .app-textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary-focus);
+  }
+  .app-textarea::placeholder {
+    color: var(--text-muted);
+    opacity: 0.8;
+  }
+  /* Tombol: label & kontrol 14px, radius 8px untuk utilitas, tekan 120ms scale(0.95) */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition active:scale-[0.98] disabled:opacity-50;
+    @apply inline-flex min-h-[40px] items-center justify-center gap-2 rounded-control px-4 py-2 text-sm font-normal transition duration-fast ease-standard active:scale-[0.95] disabled:opacity-40 disabled:pointer-events-none;
+    border-radius: var(--radius-control);
+  }
+  .btn:focus-visible {
+    outline: 2px solid var(--primary-focus);
+    outline-offset: 2px;
+  }
+  /* Aksi utama: pill 9999px */
+  .btn-primary {
+    @apply rounded-pill px-6 py-2 text-white font-normal shadow-none;
+    border-radius: var(--radius-pill);
+    background: var(--primary);
+  }
+  .btn-primary:hover {
+    filter: brightness(1.04);
   }
   .btn-ghost {
     color: var(--text);
     background: transparent;
   }
   .btn-ghost:hover {
-    background: var(--surface-2);
+    background: var(--border-subtle);
   }
   .btn-outline {
     @apply border;
@@ -80,10 +197,12 @@ body {
     background: var(--surface);
   }
   .btn-outline:hover {
-    background: var(--surface-2);
+    background: var(--border-subtle);
   }
+  /* Chip: radius pill 9999px, fine print 12px, border/bg 200ms */
   .chip {
-    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium;
+    @apply inline-flex items-center gap-2 rounded-pill px-3 py-1 text-xs font-normal transition duration-base ease-standard;
+    border-radius: var(--radius-pill);
   }
 }
 
@@ -98,6 +217,36 @@ body {
 .scroll-slim::-webkit-scrollbar-thumb {
   background: var(--border);
   border-radius: 999px;
+}
+
+/* ----------------------------------------------------------------------- */
+/* Motion: Support prefers-reduced-motion                                  */
+/* ----------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0.01ms;
+    --duration-base: 0.01ms;
+    --duration-slow: 0.01ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Disable button active press transform scaling under reduced motion */
+  .active\:scale-\[0\.95\]:active,
+  .active\:scale-\[0\.96\]:active,
+  .active\:scale-\[0\.97\]:active,
+  .active\:scale-\[0\.98\]:active,
+  .active\:scale-\[0\.99\]:active,
+  .active\:scale-\[0\.92\]:active {
+    transform: none !important;
+  }
 }
 
 /* ----------------------------------------------------------------------- */
@@ -133,13 +282,41 @@ body {
     padding: 0 !important;
     box-shadow: none !important;
     transform: none !important;
-    background: #ffffff !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    background: #ffffff;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #print-mount #print-root[data-template="creative"] {
+    background: linear-gradient(to right, var(--accent) 0%, var(--accent) 34%, #ffffff 34%, #ffffff 100%) !important;
+  }
+
+  #print-mount #print-root[data-paper="letter"] {
+    width: 816px !important;
+    min-height: 1056px !important;
+  }
+
+  /* Avoid awkward page break splits and orphan headings */
+  .cv-heading-avoid-orphan,
+  h1, h2, h3 {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .cv-item-avoid-break,
+  li {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .cv-page-break-before {
+    break-before: page !important;
+    page-break-before: always !important;
   }
 
   @page {
-    size: A4;
+    size: auto;
     margin: 0;
   }
 }
